@@ -7,6 +7,9 @@ var employeeService = require('./lib/employees');
 //employeeService변수에는 lib.employees.js에 정의된 함수를 포함하는 객체가 할당된다.
 //employeeService모듈!
 
+var responder = require('./lib/responseGenerator');
+var staticFile = responder.staticFile('/public');
+
 //클라이언트로부터 요청을 받을 때마다 createServer()콜백을 수행
 //'req인자'는 요청객체. http.ClientRequest객체. 클라이언트에 대한 정보와, 요청된 자원 정보를 담고있음
 //'res인자'는 응답객체. http.ServerResponse객체. 응답과 관련된 정보와 함수를 담고있음
@@ -44,10 +47,11 @@ http.createServer(function(req,res){
         
         employeeService.getEmployees(function(error, data){//**콜백함수의 첫번째 인자로 오류객체(error)가 온다.(노드 관례상)
             if(error){
-                //500 오류 전송    
+                //500 오류 전송
+                return responder.send500(error, res);
             }
             //200코드와 데이터 전송
-            
+            return responder.sendJson(data, res);
         });
         
         return res.end('employee list');
@@ -62,11 +66,14 @@ http.createServer(function(req,res){
         employeeService.getEmployee(_url[1], function(error, data){//**콜백함수의 첫번째 인자로 오류객체(error)가 온다.(노드 관례상)
             if(error){
                 //500 오류 전송
+                responder.send500(error, res);
             }
             if(!data){
                 //404 오류 전송
+                responder.send404(res);
             }
             //200코드와 데이터 전송
+            responder.sendJson(data, res);
         });
         
         return res.end('a single employee');
