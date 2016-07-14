@@ -54,7 +54,7 @@ http.createServer(function(req,res){
             return responder.sendJson(data, res);
         });
         
-        return res.end('employee list');
+//        return res.end('employee list');
         
     }
     else if(_url = /^\/employees\/(\d+)$/i.exec(req.url)){
@@ -66,24 +66,27 @@ http.createServer(function(req,res){
         employeeService.getEmployee(_url[1], function(error, data){//**콜백함수의 첫번째 인자로 오류객체(error)가 온다.(노드 관례상)
             if(error){
                 //500 오류 전송
-                responder.send500(error, res);
+                return responder.send500(error, res);
             }
             if(!data){
                 //404 오류 전송
-                responder.send404(res);
+                return responder.send404(res);
             }
             //200코드와 데이터 전송
-            responder.sendJson(data, res);
+            return responder.sendJson(data, res);
         });
         
-        return res.end('a single employee');
+//        return res.end('a single employee');
         
     }
     else{
         //위 두개의 조건과 일치하지 않으면 정적파일로 가정
         //정적 파일 전송
         res.writeHead(200);
-        res.end('static file');
+//        res.end('static file');
+        staticFile(req.url, res);
+        
+        
     }
             
     

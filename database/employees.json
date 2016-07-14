@@ -1,28 +1,24 @@
 [
     {
-        "id": "103"
+        
+        "id": "103",
         "name": {
-            "first": "Colin".
-            "last": "Ihring"
+            "first": "Colin"
+            , "last": "Ihring"
         }
-        , "address": {
-            "lines": ["11 wall street"]
-            , "city": "new york"
-            , "state": "NY"
-            , "zip": 10118
-        }
-    }
-    , {
-        "id": "109"
+    }, 
+    {
+        "id": "109",
         "name": {
-            "first": "Adam".
-            "last": "Smith"
+            "first": "Adam"
+            , "last": "Smith"
         }
-        , "address": {
-            "lines": ["2 market square","(market square)"]
-            , "city": "pittsburgh"
-            , "state": "PA"
-            , "zip": 15222
+    }, 
+    {
+        "id": "111",
+        "name": {
+            "first": "good"
+            , "last": "better"
         }
     }
 
