@@ -63,6 +63,9 @@ http.createServer(function(req,res){
             if(error){
                 //500 오류 전송
             }
+            if(!data){
+                //404 오류 전송
+            }
             //200코드와 데이터 전송
         });
         
