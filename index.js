@@ -1,5 +1,11 @@
-var http=require('http');
 //'HTTP서버'의 기능은 http모듈, https모듈이 담당
+var http=require('http');
+
+//DB모듈을 불러오는 코드
+//DB질의를 위한 모듈
+var employeeService = require('./lib/employees');
+//employeeService변수에는 lib.employees.js에 정의된 함수를 포함하는 객체가 할당된다.
+//employeeService모듈!
 
 //클라이언트로부터 요청을 받을 때마다 createServer()콜백을 수행
 //'req인자'는 요청객체. http.ClientRequest객체. 클라이언트에 대한 정보와, 요청된 자원 정보를 담고있음
@@ -36,6 +42,14 @@ http.createServer(function(req,res){
         
         res.writeHead(200); //응답코드 200번은 '정상'
         
+        employeeService.getEmployees(function(error, data){//**콜백함수의 첫번째 인자로 오류객체(error)가 온다.(노드 관례상)
+            if(error){
+                //500 오류 전송    
+            }
+            //200코드와 데이터 전송
+            
+        });
+        
         return res.end('employee list');
         
     }
@@ -44,6 +58,13 @@ http.createServer(function(req,res){
         //라우트에 포함된 id로 직원을 검색
         
         res.writeHead(200);
+        
+        employeeService.getEmployee(_url[1], function(error, data){//**콜백함수의 첫번째 인자로 오류객체(error)가 온다.(노드 관례상)
+            if(error){
+                //500 오류 전송
+            }
+            //200코드와 데이터 전송
+        });
         
         return res.end('a single employee');
         
